@@ -273,7 +273,7 @@ export default function ReaderPage() {
       setPdfInfo({ name: file.name, pages: numPages, chars: fullText.length });
       if (fullText.trim().length < 100) throw new Error("PDF has too little extractable text.");
 
-      if (apiKey) {
+      if (apiKey || window.location.hostname === 'localhost') { // BYOK on prod, auto on local
         setStatus("AI analyzing paper structure...");
         const res = await fetch("/api/analyze", {
           method: "POST",
@@ -644,3 +644,5 @@ export default function ReaderPage() {
 function Row({ l, children }: { l: string; children: React.ReactNode }) {
   return <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}><span style={{ fontSize: "7px", color: "#333", letterSpacing: "0.1em", minWidth: "56px" }}>{l}</span><div style={{ display: "flex", gap: "3px", flexWrap: "wrap" }}>{children}</div></div>;
 }
+
+

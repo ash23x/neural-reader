@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { apiKey, text } = await req.json();
+    const { apiKey: bodyKey, text } = await req.json();
+
+    // Use provided key, or fall back to server env var (local dev)
+    const apiKey = bodyKey || process.env.ANTHROPIC_API_KEY;
 
     if (!apiKey || typeof apiKey !== "string" || !apiKey.startsWith("sk-ant-")) {
       return NextResponse.json(
-        { error: "Invalid API key format. Must start with sk-ant-" },
+        { error: "No valid API key. Paste your key in the reader, or set ANTHROPIC_API_KEY in .env.local for local use." },
         { status: 400 }
       );
     }

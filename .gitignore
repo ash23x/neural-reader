@@ -5,5 +5,12 @@ out/
 *.tsbuildinfo
 .env
 .env.local
+*.key
+*.pem
+anthropic_key*
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
 
 .vercel
